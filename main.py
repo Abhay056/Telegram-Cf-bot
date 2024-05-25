@@ -6,7 +6,7 @@ import random
 import asyncio
 import os
 
-TOKEN = '6961128694:AAEYun_Y4hjhOtKFg-GZip4p1lbSMkUTG2c'
+TOKEN = '6961128694:AAEO_nZQwVlFg6fGmfT1GsS0NoH-7qImADo'
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
