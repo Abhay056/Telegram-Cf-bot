@@ -7,7 +7,7 @@ import random
 import asyncio
 import os
 
-TOKEN = '6961128694:AAEO_nZQwVlFg6fGmfT1GsS0NoH-7qImADo'
+TOKEN = '6961128694:AAE7LEHSK4AwgPPy7TOfkChPnsXhHHqxCrA'
 app = Flask(__name__)
 
 @app.route('/hook', methods=['POST'])
@@ -37,7 +37,7 @@ async def privacy(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Contact details\nName: Codeforces Question generator bot\nTelegram: https://t.me/codeforces_questionsbot\nThis bot is not officialy made by the Codeforces it is just made by a codeforces user for helping other users to get random question easily using telegram bot.\n"
 "The bot has been made to protect and preserve privacy as best as possible.\n"
 "The proper functioning of the bot is defined as the data required for all the commands in the /help to work as expected."
-"Our privacy policy may change from time to time. If we make any material changes to our policies, we will place a prominent notice on \nhttps://t.me/codeforce_random_qofficial"             
+"Our privacy policy may change from time to time. If we make any material changes to our policies, we will place a prominent notice on \nhttps://t.me/codeforce_random_qofficial"
 "How we Store your data? - We do not store any data of yours. None of your account names is saved in our servers.\n"
     )
 
@@ -68,21 +68,21 @@ async def get_random_question(update: Update, context: ContextTypes.DEFAULT_TYPE
             await update.message.reply_text("Invalid rating. Please provide a numerical value.")
             return
 
-        min_rating = 800 
-        max_rating = 3600  
-        
+        min_rating = 800
+        max_rating = 3600
+
         if rating < min_rating or rating > max_rating:
             await update.message.reply_text(f"No problems found, please enter rating within the range {min_rating} - {max_rating}.")
-            return 
-        
+            return
+
         problems_response = requests.get("https://codeforces.com/api/problemset.problems")
         problems_data = problems_response.json()
         if problems_data['status'] != "OK":
             raise Exception("Failed to fetch problems from Codeforces.")
-        
+
         problems = problems_data['result']['problems']
         filtered_problems = [
-            problem for problem in problems 
+            problem for problem in problems
             if problem.get('rating') == rating and (tag is None or tag in problem.get('tags', []))
         ]
 
@@ -95,19 +95,20 @@ async def get_random_question(update: Update, context: ContextTypes.DEFAULT_TYPE
         problem_link = f"https://codeforces.com/problemset/problem/{random_problem['contestId']}/{random_problem['index']}"
         url = f"https://codeforces.com/profile/{handle}"
         link_text = handle
-        message = f"[{link_text}]({url})"
-        message = f"Here's a random Codeforces problem for {message} with a rating {rating}:\n\n" \
+        m = f"[{link_text}]({url})"
+        message = f"Here's a random Codeforces problem for {m} with a rating {rating}:\n\n" \
                   f"Title: {problem_name}\n" \
                   f"Link: {problem_link}"
         await update.message.reply_text(message)
 
     except Exception as e:
         await update.message.reply_text(f"An error occurred: {e}")
-        
+
 def main():
     bot = Application.builder().token(TOKEN).build()
     bot.add_handler(CommandHandler("start", start))
     bot.add_handler(CommandHandler("help", help_command))
+    bot.add_handler(CommandHandler("privacy", privacy))
     bot.add_handler(CommandHandler("give", get_random_question))
 
     bot.run_polling()
