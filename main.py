@@ -7,7 +7,7 @@ import random
 import asyncio
 import os
 
-TOKEN = '6961128694:AAE7LEHSK4AwgPPy7TOfkChPnsXhHHqxCrA'
+TOKEN = 'Your Bot Token'
 app = Flask(__name__)
 
 @app.route('/hook', methods=['POST'])
