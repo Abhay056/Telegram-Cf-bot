@@ -8,8 +8,11 @@ from dotenv import load_dotenv
 import os   
 load_dotenv()
 
+
 TOKEN = os.getenv('BOT_TOKEN')
 app = Flask(__name__)
+
+bot = telegram.Bot(TOKEN)
 
 @app.route('/hook', methods=['POST'])
 def webhook_handler():
