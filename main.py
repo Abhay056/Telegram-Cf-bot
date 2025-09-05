@@ -4,8 +4,9 @@ from telegram.ext import Application, CommandHandler, ContextTypes, Updater
 from telegram import Update
 import requests
 import random
-import asyncio
-import os
+from dotenv import load_dotenv
+import os   
+load_dotenv()
 
 TOKEN = os.getenv('BOT_TOKEN')
 app = Flask(__name__)
